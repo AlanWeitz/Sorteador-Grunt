@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sorteador</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Roboto&display=swap" rel="stylesheet" />
+  
+  <link rel="stylesheet" href="./styles/main.css" />
+</head>
+<body>
+  <main>
+    <h1>Sorteador</h1>
+    <form id="form-sorteador">
+      <div>
+        <label for="numero-maximo">Número máximo:</label>
+        <input type="number" id="numero-maximo" required min="2" value="2" step="1" />
+      </div>
+      <button type="submit">Sortear Número</button>
+    </form>
+  </main>
+  
+  <div class="resultado" style="display:none;">
+    O número sorteado foi: <span id="resultado-valor"></span>
+  </div>
+  
+  <script src="./scripts/main.js"></script>
+</body>
+</html>

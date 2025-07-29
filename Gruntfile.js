@@ -1,9 +1,8 @@
 module.exports = function(grunt) {
-
   grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-contrib-uglify');
-  grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-contrib-copy');
 
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
@@ -28,12 +27,12 @@ module.exports = function(grunt) {
     },
 
     uglify: {
-      production: {
-        options: {
-          mangle: true,
-          compress: true,
-          sourceMap: false
-        },
+      options: {
+        mangle: true,
+        compress: true,
+        sourceMap: false
+      },
+      my_target: {
         files: {
           'dist/scripts/main.min.js': ['src/scripts/main.js']
         }
@@ -41,11 +40,15 @@ module.exports = function(grunt) {
     },
 
     copy: {
-      dev: {
-        expand: true,
-        cwd: 'src/scripts',
-        src: ['**/*.js'],
-        dest: 'dev/scripts'
+      html: {
+        files: [
+          {
+            expand: true,
+            cwd: 'dev/',
+            src: ['index.html'],
+            dest: 'dist/'
+          }
+        ]
       }
     },
 
@@ -54,22 +57,19 @@ module.exports = function(grunt) {
         files: ['src/styles/**/*.less'],
         tasks: ['less:development'],
         options: {
-          spawn: false
+          nospawn: true
         }
       },
       scripts: {
         files: ['src/scripts/**/*.js'],
-        tasks: ['copy:dev'],
+        tasks: ['uglify'],
         options: {
-          spawn: false
+          nospawn: true
         }
       }
     }
   });
 
   grunt.registerTask('default', ['watch']);
-
-  grunt.registerTask('dev', ['less:development', 'copy:dev']);
-
-  grunt.registerTask('build', ['less:production', 'uglify:production']);
+  grunt.registerTask('build', ['less:production', 'uglify', 'copy:html']);
 };
